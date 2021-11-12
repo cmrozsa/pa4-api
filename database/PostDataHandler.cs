@@ -37,7 +37,7 @@ namespace api.database
          }
 
         public List<Post> Select(){ 
-            db.Open();
+            db.Close();
             string sql = "SELECT * FROM posts WHERE deleted = 'N'";
             List<ExpandoObject> result = db.Select(sql);
 
