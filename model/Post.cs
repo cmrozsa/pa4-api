@@ -9,6 +9,7 @@ namespace api.model
         public int PostID {get; set;}
         public string PostText {get; set;}
         public string Date {get; set;}
+        public string Deleted {get; set;}
         public IPostDataHandler dataHandler {get; set;}
         public Post(){
             dataHandler = new PostDataHandler();

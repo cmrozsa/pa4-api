@@ -27,8 +27,10 @@ namespace api.database
          }
 
          public void Insert(Post post){
-             string sql = "INSERT INTO posts (post, date) ";
-            sql += "VALUES (@post, @date)";
+             string sql = "INSERT INTO posts (post, date, deleted) ";
+            sql += "VALUES (@post, @date, 'N')";
+
+            post.Date = DateTime.Now.ToString();
 
             var values = GetValues(post);
             db.Open();
@@ -38,7 +40,7 @@ namespace api.database
 
         public List<Post> Select(){ 
             db.Open();
-            string sql = "SELECT * FROM posts WHERE deleted = 'N'";
+            string sql = "SELECT * FROM posts WHERE deleted = 'N' order by id desc";
             List<ExpandoObject> result = db.Select(sql);
 
             List<Post> posts = new List<Post>();
@@ -58,8 +60,10 @@ namespace api.database
 
          
          public void Update(Post post){
+             Console.WriteLine("Made it to the Update" + post.PostText);
+             
              string sql = "UPDATE posts SET post = @post, date = @date WHERE id= @id; ";
-
+ 
             var values = GetValues(post);
             db.Open();
             db.Insert(sql, values);
@@ -68,6 +72,7 @@ namespace api.database
 
         public Dictionary<string, object> GetValues(Post post)
         {
+            Console.WriteLine("MAde it to dictionary"+ post.PostText);
             var values = new Dictionary<string, object>(){
                 {"@id", post.PostID},
                 {"@post", post.PostText},

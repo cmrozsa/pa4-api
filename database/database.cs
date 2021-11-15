@@ -78,11 +78,13 @@ namespace api.database
 
         private void QueryWithData(string query, Dictionary<string, object> values)
         {
+            System.Console.WriteLine("made it to the final save step");
             try
             {
                 using var cmd = new MySqlCommand(query, this.Conn);
                 foreach (var p in values)
                 {
+                    System.Console.WriteLine(p.Key + p.Value);
                     cmd.Parameters.AddWithValue(p.Key, p.Value);
                 }
 

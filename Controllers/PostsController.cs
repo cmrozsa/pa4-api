@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Cors;
 using api.database;
 using api.model;
 using api.interfaces;
@@ -37,6 +37,7 @@ namespace api.Controllers
         [HttpPost]
         public void Post([FromBody] Post value)
         {
+            Console.WriteLine("made it to the post" + value.PostText);
             value.dataHandler.Insert(value);
         }
 
@@ -45,6 +46,9 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Post value)
         {
+            value.PostID = id;
+            value.Date = DateTime.Now.ToString();
+            Console.WriteLine("made it to the put" + value.PostText);
             value.dataHandler.Update(value);
         }
 
@@ -53,7 +57,7 @@ namespace api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Post value = new Post(){PostID = id};
+            Post value = new Post() { PostID = id };
 
             value.dataHandler.Delete(value);
         }
